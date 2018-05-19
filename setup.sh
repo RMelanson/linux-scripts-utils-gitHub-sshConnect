@@ -6,4 +6,4 @@
 yum install git -y
 
 # Add github access keys
-./generateKeys.sh
+./sshConfig.sh
