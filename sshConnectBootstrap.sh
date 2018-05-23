@@ -21,8 +21,6 @@ fi
 echo Executing $clone$gitRepo $installDir
 $clone$gitRepo $installDir
 
-exit 1
-
 # Setup $pkg
 cd $installDir
 . ./setup.sh
