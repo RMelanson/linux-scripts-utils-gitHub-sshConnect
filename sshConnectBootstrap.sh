@@ -1,6 +1,12 @@
 #!/bin/bash
 sshConnectDir=$PWD
 
+#INITIAL BASIC TOOLS INSTALL
+yum update -y
+
+#INSTALL GIT
+yum install git -y
+
 #Set Cloning Properties
 pkg=Web
 gitRepo="linux-scripts-utils-gitHub-sshConnect"
