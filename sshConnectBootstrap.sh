@@ -1,5 +1,9 @@
 #!/bin/bash
 sshConnectDir=$PWD
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root or under sudo"
+  exit -1
+fi
 
 #INITIAL BASIC TOOLS INSTALL
 yum update -y
