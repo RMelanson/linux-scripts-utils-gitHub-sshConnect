@@ -16,9 +16,9 @@ pkg=Web
 gitRepo="linux-scripts-utils-gitHub-sshConnect"
 installDir="/tmp/scripts/utils/sshConnect"
 if [ -f ~/.ssh/gitHub.key ]; then
-   clone="git clone -b $branch git@github.com:RMelanson/"
+   clone="git clone git@github.com:RMelanson/"
 else
-   clone="git clone -b $branch https://github.com/RMelanson/"
+   clone="git clone https://github.com/RMelanson/"
 fi
 
 # Clone $pkg
