@@ -5,12 +5,6 @@ if [ "$EUID" -ne 0 ]
   exit -1
 fi
 
-if [ -z "$1" ]; then
-   branch=master
-else
-  branch=$1
-fi
-
 #INITIAL BASIC TOOLS INSTALL
 yum update -y
 
@@ -33,6 +27,11 @@ $clone$gitRepo $installDir
 
 # Setup $pkg
 cd $installDir
-. ./setup.sh
+
+# MAKE ALL SHELL SCRIPTS EXECUTABLE TO ROOT ONLY
+find . -name "*.sh" -exec chmod 700 {} \;
+
+# Setup Project
+./setup
 
 cd $sshConnectDir
