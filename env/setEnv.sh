@@ -1,1 +1,4 @@
-# ToDo Create Environment script
+#!/bin/bash
+
+# HTTP WEB CONFIGURATION PARAMETERS
+pkg=sshConnect
