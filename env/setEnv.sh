@@ -1,6 +1,6 @@
 #!/bin/bash
 
 # HTTP WEB CONFIGURATION PARAMETERS
-pkg=sshConnect
+pkg=SSH_CONNECT
 gitRepo="linux-scripts-utils-gitHub-sshConnect"
-installDir="/tmp/scripts/utils/sshConnect"
+installDir="/tmp/scripts/utils/$pkg"
