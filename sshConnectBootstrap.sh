@@ -13,7 +13,7 @@ yum install git -y
 # SETUP ENVIRONMENT AND PARAMETERS
 sshConnectDir=$PWD
 pkg=SSH_CONNECT
-gitRepo="linux-scripts-utils-gitHub-sshConnect"
+gitRepo="linux-scripts-utils-gitHub-sshConnect.git"
 installDir="/tmp/scripts/utils/$pkg"
 
 if [ -f ~/.ssh/gitHub.key ]; then
