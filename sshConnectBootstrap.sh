@@ -48,4 +48,4 @@ find . -name "*.sh" -exec chmod 700 {} \;
 # Setup Project
 ./setup.sh 2>&1| tee setup.log
 
-cd $sshConnectDir
+cd $bootstrapDir
