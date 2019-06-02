@@ -1,5 +1,8 @@
 #!/bin/bash
-# Setup the required environment
+
+# SETUP THE ENVIRONMENT
+setupName=setup.sh
+echo "$setupName: EXECUTING: . ./env/setEnv.sh $*"
 . ./env/setEnv.sh $*
 
 # COPY RESTORE 
