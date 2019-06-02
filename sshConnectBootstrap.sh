@@ -46,6 +46,7 @@ cd $bootstrapDir
 find . -name "*.sh" -exec chmod 700 {} \;
 
 # Setup Project
+echo "BOOTSTRAP EXECUTING: ./setup.sh $* 2>&1| tee setup.log"
 ./setup.sh $* 2>&1| tee setup.log
 
 cd $bootstrapDir
