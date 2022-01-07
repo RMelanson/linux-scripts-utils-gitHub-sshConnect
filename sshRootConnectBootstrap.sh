@@ -1,6 +1,6 @@
 #!/bin/bash
 bootstrapDir=$PWD
-bootstrap=$0
+bootstrap="sshRootConnectBootstrap.sh"
 
 echo Bootstrap = $bootstrap
 echo \$0 = $0
@@ -15,7 +15,7 @@ if [ "$EUID" -ne 0 ]
       echo "ERROR: CANNOT PROCEED, MUST RUN AS ROOT OR UNDER SUDO" 2>&1 | tee -a sshConnectBootstrap.log
     else
       echo $(whoami) HAS SUDO 2>&1 | tee -a sshConnectBootstrap.log
-      sudo $0 $@
+      sudo $bootstrap $@
   fi
 else
    if [ "$EUID" -ne 0 ]
@@ -65,5 +65,5 @@ else
    cd $bootstrapDir
 fi
 
-   # Setup $pkg
-   cd $bootstrapDir
+# Setup $pkg
+cd $bootstrapDir
