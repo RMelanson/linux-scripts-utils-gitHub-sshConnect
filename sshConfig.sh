@@ -5,5 +5,5 @@ echo " IdentityFile ~/.ssh/gitHub"     >> ~/.ssh/config
 echo " User git"                       >> ~/.ssh/config
 echo " passwordAuthentication no"      >> ~/.ssh/config
 echo "<Copy the following ssh public key to github settings for ssh keys>"
-cat ~/.ssh/gitHub.key.pub
+cat ~/.ssh/gitHub.pub
 echo
