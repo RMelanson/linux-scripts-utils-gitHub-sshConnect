@@ -1,6 +1,9 @@
 #!/bin/bash
 bootstrapDir=$PWD
-bootstrap=$bootstrapDir/sshConnectBootstrap.sh
+bootstrap=$0
+
+echo Bootstrap = $bootstrap
+echo \$0 = $0
 
 # Ensure script is running under root
 if [ "$EUID" -ne 0 ]
@@ -40,8 +43,9 @@ else
    pkg=SSH_CONNECT
    gitRepo="linux-scripts-utils-gitHub-sshConnect.git"
    installDir="/tmp/scripts/utils/$pkg"
+   remoteHostName=gitHub
 
-   if [ -f ~/.ssh/gitHub.key ]; then
+   if [ -f ~/.ssh/$gitHub ]; then
       clone="git clone git@github.com:RMelanson/"
    else
       clone="git clone https://github.com/RMelanson/"
@@ -50,10 +54,6 @@ else
    # Clone $pkg
    echo Executing $clone$gitRepo $installDir
    $clone$gitRepo $installDir
-
-   # Setup $pkg
-   cd $bootstrapDir
-
    # MAKE ALL SHELL SCRIPTS EXECUTABLE TO ROOT ONLY
    find . -name "*.sh" -exec chmod 700 {} \;
 
@@ -63,3 +63,7 @@ else
 
    cd $bootstrapDir
 fi
+
+
+   # Setup $pkg
+   cd $bootstrapDir
