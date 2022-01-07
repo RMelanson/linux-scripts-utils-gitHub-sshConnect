@@ -32,8 +32,6 @@ else
    echo installing git if not installed
    yum install git -y
 fi
-chmod +x $bootstrap
-$bootstrap
 
 # SETUP ENVIRONMENT AND PARAMETERS
 sshConnectDir=$PWD
