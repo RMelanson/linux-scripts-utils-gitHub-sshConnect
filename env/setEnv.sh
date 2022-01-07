@@ -5,6 +5,7 @@ pkg=SSH_CONNECT
 bootstrap="sshConnectBootstrap.sh"
 
 gitRepo="linux-scripts-utils-gitHub-sshConnect"
+remoteHostName="gitHub"
 
 #SET UP INSTALLATION DIRECTORY`
 pkg=SSH_CONNECT
