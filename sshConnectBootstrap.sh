@@ -59,12 +59,15 @@ install_git(){
 }
 
 configure_remote_ssh_access(){
-  ssh-keygen -t rsa -N "" -f ~/.ssh/gitHub
-  echo "host github.com"                 >> ~/.ssh/config
-  echo " HostName github.com"            >> ~/.ssh/config
-  echo " IdentityFile ~/.ssh/gitHub"     >> ~/.ssh/config
-  echo " User git"                       >> ~/.ssh/config
-  echo " passwordAuthentication no"      >> ~/.ssh/config
+  ssh_key_name=$1
+  remote_host=$2
+  echoLog ECECUTING configure_remote_ssh_access $*
+  ssh-keygen -t rsa -N "" -f ~/.ssh/$ssh_key_name
+  echo "host "$remote_host                  >> ~/.ssh/config
+  echo " HostName "$remote_host             >> ~/.ssh/config
+  echo " IdentityFile ~/.ssh/"$ssh_key_name >> ~/.ssh/config
+  echo " User git "                         >> ~/.ssh/config
+  echo " passwordAuthentication no"         >> ~/.ssh/config
   chmod 600 ~/.ssh/config
 
   # Add ssh-agent to bashrc if not already installed for load on startup
@@ -77,10 +80,10 @@ configure_remote_ssh_access(){
       echo 'eval $("ssh-agent")' >> ~/.bashrc
   fi
 
-  echoLog "<Copy the following ssh public (~/.ssh/gitHub.pub) key to the remote authorized keys keys>"
-  cat ~/.ssh/gitHub.pub
+  echoLog "<Copy the following ssh public (~/.ssh/$ssh_host_key).pub key to the remote authorized keys keys>"
+  cat ~/.ssh/$ssh_key_name.pub
 }
 
 update_system
 install_git
-configure_remote_ssh_access
+configure_remote_ssh_access gitHub gitHub.com
