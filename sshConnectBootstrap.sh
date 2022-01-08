@@ -77,7 +77,9 @@ configure_remote_ssh_access(){
   else
       echoLog ssh-agent not found, Adding ssh-agent to bashrc starup script
       echoLog EXECUTING "echo 'eval \$("ssh-agent")' >> ~/.bashrc"
-      echo 'eval $("ssh-agent")' >> ~/.bashrc
+      echo 'if [ "$PS1" ]; then' >> ~/.bashrc
+      echo '  eval $("ssh-agent")' >> ~/.bashrc
+      echo 'fi' >> ~/.bashrc
   fi
 
   echoLog "<Copy the following ssh public (~/.ssh/$ssh_host_key).pub key to the remote authorized keys keys>"
