@@ -49,12 +49,12 @@ execute_as_root(){
   fi
 }
 update_system(){
-   echoLog("Updating System: execute_as_root yum update -y");
+   echoLog Updating System: execute_as_root yum update -y;
    execute_as_root yum update -y
 }
 
 install_git(){
-   echoLog("Installing git");
+   echoLog Installing git;
    execute_as_root yum install git -y
 }
 
