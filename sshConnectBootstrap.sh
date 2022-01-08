@@ -8,7 +8,7 @@ installDir="/tmp/scripts/utils/$pkg"/
 remoteHostName=gitHub
 
 echoLog(){
- echo $* 2>&1 | tee setup.log
+ echo $* 2>&1 | tee -a setup.log
 }
  
 is_root_user(){
