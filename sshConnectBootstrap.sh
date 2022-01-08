@@ -1,37 +1,4 @@
 #!/bin/bash
-bootstrapDir=$PWD
-bootstrap=$0
-
-echo Bootstrap = $bootstrap
-echo \$0 = $0
-
-# Ensure script is running under root
-if [ "$EUID" -ne 0 ]
-  then
-  echo WARNING: NOT ROOT OR SUDO, CHECKING USER $(whoami) FOR SUDO ACCESS 2>&1 | tee -a sshConnectBootstrap.log
-  if [ "$(getent group wheel | grep $(whoami))" = "" ]
-    then
-      echo $(whoami) HAS NO SUDO ACCESS 2>&1 | tee -a wordpressBootstrap.log
-  else
-      echo $(whoami) HAS SUDO 2>&1 | tee -a sshConnectBootstrap.log
-      #INITIAL BASIC TOOLS INSTALL
-      echo updating System
-      sudo yum update -y
-
-      #INSTALL GIT
-      echo installing git if not installed
-      sudo yum install git -y
-  fi
-else
-   echo UPDATING SYSTEM AS ROOT
-   #INITIAL BASIC TOOLS INSTALL
-   echo updating System
-   yum update -y
-
-   #INSTALL GIT
-   echo installing git if not installed
-   yum install git -y
-fi
 
 # SETUP ENVIRONMENT AND PARAMETERS
 sshConnectDir=$PWD
@@ -40,23 +7,69 @@ gitRepo="linux-scripts-utils-gitHub-sshConnect.git"
 installDir="/tmp/scripts/utils/$pkg"
 remoteHostName=gitHub
 
-if [ -f ~/.ssh/$gitHub ]; then
-   clone="git clone git@github.com:RMelanson/"
-else
-   clone="git clone https://github.com/RMelanson/"
-fi
+# is_root_user: Determine if current user is root (id = 0)
+is_root_user(){
+  [ $(id -u) -eq 0 ]
+}
 
-# Clone $pkg
-echo Executing $clone$gitRepo $installDir
-$clone$gitRepo $installDir
-# MAKE ALL SHELL SCRIPTS EXECUTABLE TO ROOT ONLY
-find . -name "*.sh" -exec chmod 700 {} \;
+# is_sudo_user: Determine if current user is sudo user
+is_sudo_user(){
+  [ "$(getent group wheel | grep $(whoami))" != "" ]
+}
 
-# Setup Project
-echo "BOOTSTRAP EXECUTING: ./setup.sh $* 2>&1| tee setup.log"
-./setup.sh $* 2>&1| tee setup.log
+# execute_as_root: execute as root if root user or has sudo access
+execute_as_root(){
+  if is_root_user
+  then {
+    echo EXECUTING AS ROOT USER command $*
+    $*
+  }
+  else {
+    if is_sudo_user
+    then {
+      echo EXECUTING AS SUDO USER $*
+      sudo $*
+    }
+    else {
+      echo NO ROOT OR SUDO ACCESS FOR USER $(whoami)
+      echo COMMAND $*
+      echo NOT EXECUTED UNDER ROOT
+    }
+    fi
+  }
+  fi
+}
+update_system(){
+   execute_as_root yum update -y
+}
 
-cd $bootstrapDir
+install_git(){
+   execute_as_root yum install git -y
+}
 
-# Setup $pkg
-cd $bootstrapDir
+configure_remote_ssh_access(){
+  ssh-keygen -t rsa -N "" -f ~/.ssh/gitHub
+  echo "host github.com"                 >> ~/.ssh/config
+  echo " HostName github.com"            >> ~/.ssh/config
+  echo " IdentityFile ~/.ssh/gitHub"     >> ~/.ssh/config
+  echo " User git"                       >> ~/.ssh/config
+  echo " passwordAuthentication no"      >> ~/.ssh/config
+  chmod 600 ~/.ssh/config
+
+  # Add ssh-agent to bashrc if not already installed for load on startup
+  if grep -Fxq ~/.bashrc "ssh-agent"
+  then
+      echo ssh-agent found
+  else
+      echo ssh-agent not found, Adding ssh-agent to bashrc starup script
+      echo EXECUTING "echo 'eval \$("ssh-agent")' >> ~/.bashrc"
+      echo 'eval $("ssh-agent")' >> ~/.bashrc
+  fi
+
+  echo "<Copy the following ssh public (~/.ssh/gitHub.pub) key to the remote authorized keys keys>"
+  cat ~/.ssh/gitHub.pub
+}
+
+update_system
+install_git
+configure_remote_ssh_access
