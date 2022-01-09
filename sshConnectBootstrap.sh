@@ -79,30 +79,23 @@ configure_remote_ssh_access(){
   echo " User git "                         >> ~/.ssh/config
   echo " passwordAuthentication no"         >> ~/.ssh/config
   chmod 600 ~/.ssh/config
+}
 
+update_bashrc() {
   # Add ssh-agent to bashrc if not already installed for load on startup
-  
-  ################################################# To BE INSERTED
-  fname=f
-str=sss
-if strInFile $str $fname; then
-   echo $str not contained in file
-else
-   echo $str is in file at least once
-fi
-################################################## TO BE REPLACED
-  
-  if grep -Fxq ~/.bashrc "ssh-agent"
-  then
-      echoLog ssh-agent found
+  str=$1"
+  fname=$2
+  if strInFile $str $fname; then
+     echoLog $str not contained in file
+   
   else
-      echoLog ssh-agent not found, Adding ssh-agent to bashrc starup script
-      echoLog EXECUTING "echo 'eval \$("ssh-agent")' >> ~/.bashrc"
-      echo 'if [ "$PS1" ]; then' >> ~/.bashrc
-      echo '  eval $("ssh-agent")' >> ~/.bashrc
-      echo 'fi' >> ~/.bashrc
+     echoLog $str is in file at least once
+     echoLog ssh-agent not found, Adding ssh-agent to .bashrc starup script
+     echoLog EXECUTING "echo 'eval \$("ssh-agent")' >> $fname"
+     echo 'if [ "$PS1" ]; then' >> $fname
+     echo '  eval $("ssh-agent")' >> $fname
+     echo 'fi' >> $fname
   fi
-################################################## END REPLACEMENT
 
   echoLog "<Copy the following ssh public (~/.ssh/$ssh_host_key).pub key to the remote authorized keys keys>"
   cat ~/.ssh/$ssh_key_name.pub
@@ -111,3 +104,4 @@ fi
 update_system
 install_git
 configure_remote_ssh_access gitHub gitHub.com
+update_bashrc "ssh-agent" "~/.bashrc"
