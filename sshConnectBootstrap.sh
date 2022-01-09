@@ -83,7 +83,7 @@ configure_remote_ssh_access(){
 
 update_bashrc() {
   # Add ssh-agent to bashrc if not already installed for load on startup
-  str=$1"
+  str=$1
   fname=$2
   if strInFile $str $fname; then
      echoLog $str not contained in file
