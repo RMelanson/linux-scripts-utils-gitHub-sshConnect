@@ -25,6 +25,16 @@ is_sudo_user(){
   [ "$(getent group wheel | grep $(whoami))" != "" ]
 }
 
+strInFile(){
+   str=$1
+   fname=$2
+   echo Searching for String $str in File $fname
+   echo EXECUTING: cat $fname \| -c $str
+   found=$(cat $fname | grep -c $str)
+   echo string found = $found
+  [ $found -eq 0 ]
+}
+
 # execute_as_root: execute as root if root user or has sudo access
 execute_as_root(){
   echoLog "EXECUTING: "$@
@@ -71,6 +81,17 @@ configure_remote_ssh_access(){
   chmod 600 ~/.ssh/config
 
   # Add ssh-agent to bashrc if not already installed for load on startup
+  
+  ################################################# To BE INSERTED
+  fname=f
+str=sss
+if strInFile $str $fname; then
+   echo $str not contained in file
+else
+   echo $str is in file at least once
+fi
+################################################## TO BE REPLACED
+  
   if grep -Fxq ~/.bashrc "ssh-agent"
   then
       echoLog ssh-agent found
@@ -81,6 +102,7 @@ configure_remote_ssh_access(){
       echo '  eval $("ssh-agent")' >> ~/.bashrc
       echo 'fi' >> ~/.bashrc
   fi
+################################################## END REPLACEMENT
 
   echoLog "<Copy the following ssh public (~/.ssh/$ssh_host_key).pub key to the remote authorized keys keys>"
   cat ~/.ssh/$ssh_key_name.pub
