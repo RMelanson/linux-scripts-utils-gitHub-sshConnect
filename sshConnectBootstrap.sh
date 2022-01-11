@@ -8,6 +8,7 @@ installDir="/tmp/scripts/utils/$pkg"/
 ssh_key_name="gitHub"
 remoteHostName=$ssh_key_name
 remoteHostURL=$remoteHostName.com
+bashrc=~/.bashrc
 
 date > setup.log
 
@@ -24,6 +25,7 @@ printParms (){
   echoLog ssh_key_name=$ssh_key_name
   echoLog remoteHostName=$remoteHostName
   echoLog remoteHostURL=$remoteHostURL
+  echoLog bashrc=$bashrc
   echoLog "=================================================================="
 }
 
@@ -125,5 +127,7 @@ echoLog EXECUTING: install_git
 install_git
 echoLog EXECUTING: configure_remote_ssh_access $remoteHostName $remoteHostURL
 configure_remote_ssh_access $remoteHostName $remoteHostURL
-echoLog EXECUTING: update_bashrc "ssh-agent" "~/.bashrc"
-update_bashrc "ssh-agent" "~/.bashrc"
+echoLog EXECUTING: update_bashrc "ssh-agent" $bashrc
+update_bashrc "ssh-agent" $bashrc
+echoLog EXECUTING: Starting ssh-agent with eval $("ssh-agent")
+eval $("ssh-agent")
