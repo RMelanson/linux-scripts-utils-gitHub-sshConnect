@@ -8,7 +8,9 @@ installDir="/tmp/scripts/utils/$pkg"/
 ssh_key_name="gitHub"
 remoteHostName=$ssh_key_name
 remoteHostURL=$remoteHostName.com
-bashrc=~/.bashrc
+homeDir=~
+sshDir=$homeDir/.ssh
+bashrc=$homeDir/.bashrc
 
 date > setup.log
 
@@ -25,6 +27,8 @@ printParms (){
   echoLog ssh_key_name=$ssh_key_name
   echoLog remoteHostName=$remoteHostName
   echoLog remoteHostURL=$remoteHostURL
+  echoLog homeDir=~
+  echoLog sshDir=$sshDir
   echoLog bashrc=$bashrc
   echoLog "=================================================================="
 }
@@ -107,9 +111,10 @@ update_bashrc() {
      echoLog $str not contained in file
      echoLog ssh-agent not found, Adding ssh-agent to .bashrc starup script
      echoLog EXECUTING "echo 'eval \$("ssh-agent")' >> $fname"
-     echo 'if [ "$PS1" ]; then' >> $fname
-     echo '  eval $("ssh-agent")' >> $fname
-     echo 'fi' >> $fname
+     echoLog 'if [ "$PS1" ]; then' >> $fname
+     echoLog "  "' eval $("ssh-agent")' >> $fname
+     echoLog "  "  ssh-add $sshDir/$ssh_key_name >> $fname
+     echoLog fi >> $fname
   else
      echoLog $str is in file at least once
   fi
@@ -117,7 +122,6 @@ update_bashrc() {
   echoLog "<Copy the following ssh public (~/.ssh/$ssh_host_key).pub key to the remote authorized keys keys>"
   cat ~/.ssh/$ssh_key_name.pub
 }
-
 
 echoLog EXECUTING: printParms
 printParms
