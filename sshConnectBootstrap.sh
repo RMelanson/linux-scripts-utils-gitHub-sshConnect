@@ -5,7 +5,8 @@ sshConnectDir=$PWD
 pkg=SSH_CONNECT
 gitRepo="linux-scripts-utils-gitHub-sshConnect.git"
 installDir="/tmp/scripts/utils/$pkg"/
-remoteHostName=gitHub
+ssh_key_name=remoteHostName="gitHub"
+remoteHostURL=$remoteHostName.com
 
 echoLog(){
  echo $* 2>&1 | tee -a setup.log
@@ -87,21 +88,24 @@ update_bashrc() {
   fname=$2
   if strInFile $str $fname; then
      echoLog $str not contained in file
-   
-  else
-     echoLog $str is in file at least once
      echoLog ssh-agent not found, Adding ssh-agent to .bashrc starup script
      echoLog EXECUTING "echo 'eval \$("ssh-agent")' >> $fname"
      echo 'if [ "$PS1" ]; then' >> $fname
      echo '  eval $("ssh-agent")' >> $fname
      echo 'fi' >> $fname
+  else
+     echoLog $str is in file at least once
   fi
 
   echoLog "<Copy the following ssh public (~/.ssh/$ssh_host_key).pub key to the remote authorized keys keys>"
   cat ~/.ssh/$ssh_key_name.pub
 }
 
+echoLog EXECUTING: update_system
 update_system
+echoLog EXECUTING: install_git
 install_git
-configure_remote_ssh_access gitHub gitHub.com
+echoLog EXECUTING: configure_remote_ssh_access $remoteHostName $remoteHostURL
+configure_remote_ssh_access $remoteHostName $remoteHostURL
+echoLog EXECUTING: update_bashrc "ssh-agent" "~/.bashrc"
 update_bashrc "ssh-agent" "~/.bashrc"
