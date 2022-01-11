@@ -5,8 +5,11 @@ sshConnectDir=$PWD
 pkg=SSH_CONNECT
 gitRepo="linux-scripts-utils-gitHub-sshConnect.git"
 installDir="/tmp/scripts/utils/$pkg"/
-ssh_key_name=remoteHostName="gitHub"
+ssh_key_name="gitHub"
+remoteHostName=$ssh_key_name
 remoteHostURL=$remoteHostName.com
+
+date > setup.log
 
 echoLog(){
  echo $* 2>&1 | tee -a setup.log
