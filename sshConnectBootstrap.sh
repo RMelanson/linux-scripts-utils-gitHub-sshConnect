@@ -12,6 +12,18 @@ echoLog(){
  echo $* 2>&1 | tee -a setup.log
 }
  
+printParms (){
+  echoLog "===================== SSH CONNECT PARAMETERS ====================="
+  echoLog sshConnectDir=$sshConnectDir
+  echoLog pkg=$pkg
+  echoLog gitRepo=$gitRepo
+  echoLog installDir=$installDir
+  echoLog ssh_key_name=$ssh_key_name
+  echoLog remoteHostName=$remoteHostName
+  echoLog remoteHostURL=$remoteHostURL
+  echoLog "=================================================================="
+}
+
 is_root_user(){
   [ $(id -u) -eq 0 ]
 }
@@ -101,6 +113,9 @@ update_bashrc() {
   cat ~/.ssh/$ssh_key_name.pub
 }
 
+
+echoLog EXECUTING: printParms
+printParms
 echoLog EXECUTING: update_system
 update_system
 echoLog EXECUTING: install_git
