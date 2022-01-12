@@ -17,6 +17,21 @@ date > setup.log
 echoLog(){
  echo $* 2>&1 | tee -a setup.log
 }
+
+is_current_shell(){
+  shell=$0
+  [ $shell = "-bash" ]
+}
+
+if ! is_current_shell
+then {
+  echoLog ERROR: not current shell
+  echoLog USAGE: . $0
+  echoLog EXITING . $0
+  exit
+}
+fi
+
  
 printParms (){
   echoLog "===================== SSH CONNECT PARAMETERS ====================="
