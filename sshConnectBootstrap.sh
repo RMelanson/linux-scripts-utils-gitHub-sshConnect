@@ -25,7 +25,7 @@ is_current_shell(){
 
 if ! is_current_shell
 then {
-  echoLog ERROR: not current shell
+  echoLog ERROR: Not current shell
   echoLog USAGE: . $0
   echoLog EXITING . $0
   exit
@@ -123,13 +123,13 @@ update_bashrc() {
   str=$1
   fname=$2
   if strInFile $str $fname; then
-     echoLog $str not contained in file
-     echoLog ssh-agent not found, Adding ssh-agent to .bashrc starup script
-     echoLog EXECUTING "echo 'eval \$("ssh-agent")' >> $fname"
-     echoLog 'if [ "$PS1" ]; then' >> $fname
-     echoLog "  "' eval $("ssh-agent")' >> $fname
-     echoLog "  "  ssh-add $sshDir/$ssh_key_name >> $fname
-     echoLog fi >> $fname
+     echoLog $str not contained in file $file, ADDING SSH-AHENT Startup Code to $file
+     echo ssh-agent not found, Adding ssh-agent to .bashrc starup script
+     echo EXECUTING "echo 'eval \$("ssh-agent")' >> $fname"
+     echo 'if [ "$PS1" ]; then' >> $fname
+     echo "  "' eval $("ssh-agent")' >> $fname
+     echo "  "  ssh-add $sshDir/$ssh_key_name >> $fname
+     echo fi >> $fname
   else
      echoLog $str is in file at least once
   fi
@@ -150,3 +150,6 @@ echoLog EXECUTING: update_bashrc "ssh-agent" $bashrc
 update_bashrc "ssh-agent" $bashrc
 echoLog EXECUTING: Starting ssh-agent with eval $("ssh-agent")
 eval $("ssh-agent")
+echoLog ADDING PRIVATE KEY TO AGENT
+echoLog EXECUTING: ssh-add /home/skaleis/.ssh/gitHub
+ssh-add /home/skaleis/.ssh/gitHub
