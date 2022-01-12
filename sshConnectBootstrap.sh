@@ -1,13 +1,15 @@
 #!/bin/bash
 
-# SETUP ENVIRONMENT AND PARAMETERS
+# USER SETUP PARAMETERS FOR REMOTE ACCESS
+ssh_key_name="gitHub"
+remoteHostName=$ssh_key_name
+remoteHostURL=$remoteHostName.com
+
+# OTHER SETUP ENVIRONMENT AND PARAMETERS
 sshConnectDir=$PWD
 pkg=SSH_CONNECT
 gitRepo="linux-scripts-utils-gitHub-sshConnect.git"
 installDir="/tmp/scripts/utils/$pkg"/
-ssh_key_name="gitHub"
-remoteHostName=$ssh_key_name
-remoteHostURL=$remoteHostName.com
 homeDir=~
 sshDir=$homeDir/.ssh
 bashrc=$homeDir/.bashrc
