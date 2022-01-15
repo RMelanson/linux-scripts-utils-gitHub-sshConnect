@@ -22,7 +22,8 @@ echoLog(){
 
 is_current_shell(){
   shell=$0
-  [ $shell = "-bash" ]
+  echo shell = $shell
+  [ $shell = "-bash" ] || [ $shell = "bash" ]
 }
 
 if ! is_current_shell
@@ -97,6 +98,7 @@ execute_as_root(){
   }
   fi
 }
+
 update_system(){
    echoLog Updating System: execute_as_root yum update -y;
    execute_as_root yum update -y
