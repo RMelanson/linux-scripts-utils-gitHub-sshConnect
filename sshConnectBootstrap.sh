@@ -34,7 +34,6 @@ then {
   exit
 }
 fi
-
  
 printParms (){
   echoLog "===================== SSH CONNECT PARAMETERS ====================="
