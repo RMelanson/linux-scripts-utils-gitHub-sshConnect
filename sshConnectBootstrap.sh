@@ -51,10 +51,6 @@ printParms (){
   echoLog "=================================================================="
 }
 
-is_root_user(){
-  [ $(id -u) -eq 0 ]
-}
-
 # is_root_user: Determine if current user is root (id = 0)
 is_root_user(){
   [ $(id -u) -eq 0 ]
